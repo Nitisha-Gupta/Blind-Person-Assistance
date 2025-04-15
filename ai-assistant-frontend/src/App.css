@@ -2,22 +2,84 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #121212;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #f5f5f5;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+/* Particle Background Animation */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  --c: #00c9a7; /* Matching your accent color */
+  background-color: #121212;
+  background-image: 
+    radial-gradient(4px 100px at 0px 235px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 235px, var(--c), #0000),
+    /* ... (keep all other gradient definitions) ... */
+    radial-gradient(1.5px 1.5px at 150px 105px, var(--c) 100%, #0000 150%);
+  background-size:
+    300px 235px,
+    300px 235px,
+    /* ... (keep all other background-size definitions) ... */
+    300px 210px;
+  animation: hi 150s linear infinite;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(0.5em) brightness(4);
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    #0000 0,
+    #0000 2px,
+    hsl(0 0 4%) 2px
+  );
+  background-size: 8px 8px;
+}
+
+@keyframes hi {
+  0% {
+    background-position:
+      0px 220px,
+      3px 220px,
+      /* ... (keep all initial positions) ... */
+      426.5px 180px;
+  }
+  to {
+    background-position:
+      0px 6800px,
+      3px 6800px,
+      /* ... (keep all final positions) ... */
+      426.5px 6480px;
+  }
+}
+
+/* App Container */
 .app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 .title {
   font-size: 2.5rem;
   margin-bottom: 30px;
   color: #f5f5f5;
+  text-shadow: 0 0 10px rgba(0, 201, 167, 0.5);
 }
 
 /* Button styles from Uiverse.io (customized for dark mode) */
@@ -27,13 +89,14 @@ body {
   padding: 12px 28px;
   font-size: 18px;
   color: #f5f5f5;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.3);
   border: 2px solid #00c9a7;
   border-radius: 30px;
   font-weight: 600;
   transition: all 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(4px);
 }
 
 .button::before {
@@ -56,13 +119,15 @@ body {
 
 .button:hover {
   color: #121212;
-  scale: 1.05;
+  transform: scale(1.05);
   box-shadow: 0 0px 15px rgba(0, 201, 167, 0.4);
 }
 
 /* Video container */
 .video-container {
   margin-top: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
 }
 
 .video-box {
@@ -71,7 +136,7 @@ body {
   border: 3px solid #00c9a7;
   border-radius: 12px;
   object-fit: cover;
-  background-color: #222;
+  background-color: rgba(34, 34, 34, 0.7);
 }
 
 /* Loader animation from Uiverse.io */
@@ -128,13 +193,14 @@ body {
   padding: 12px 28px;
   font-size: 18px;
   color: #f5f5f5;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.3);
   border: 2px solid #ff4c4c;
   border-radius: 30px;
   font-weight: 600;
   transition: all 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(4px);
 }
 
 .stop-button::before {
@@ -157,12 +223,84 @@ body {
 
 .stop-button:hover {
   color: #121212;
-  scale: 1.05;
+  transform: scale(1.05);
   box-shadow: 0 0px 15px rgba(255, 76, 76, 0.4);
 }
 
+.voice-prompt {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: rgba(34, 34, 34, 0.7);
+  color: #ffcc00;
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
 
+/* Navigation status */
+.navigation-status {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(46, 204, 113, 0.8);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  backdrop-filter: blur(4px);
+}
 
+.pulse-animation {
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
 
+/* Image container */
+.image-container {
+  position: relative;
+  margin: 20px auto;
+  max-width: 800px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
 
+.detected-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
+/* Video feed container */
+.video-container {
+  width: 100%;
+  max-width: 640px;
+  margin: 20px auto;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.live-video-feed {
+  width: 100%;
+  display: block;
+}
+
+/* Keyframes for pulse animation */
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
